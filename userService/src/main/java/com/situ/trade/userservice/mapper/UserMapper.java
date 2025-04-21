@@ -64,7 +64,7 @@ public interface UserMapper {
             "<if test='realname!=null and realname.length>0'> and realname like concat('%',#{realname},'%') </if>",
             "<if test='status!=null'> and status=#{status} </if>",
             "</where>",
-            "order by startdate desc",
+            "order by create_time desc",
             "</script>",
     })
     List<User> select(User user);
