@@ -1,0 +1,19 @@
+# 端口
+server:
+  port: 10200
+
+# 数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/trade?serverTimezone=GMT%2b8
+    username: root
+    password: '2913597577'
+
+#Mybits
+mybatis:
+  configuration:
+    #打印sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名转换
+    map-underscore-to-camel-case: true

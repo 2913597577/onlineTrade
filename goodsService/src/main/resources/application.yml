@@ -1,0 +1,37 @@
+# 端口
+server:
+  port: 10300
+
+# 数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/trade?serverTimezone=GMT%2b8
+    username: root
+    password: '2913597577'
+
+#Mybits
+mybatis:
+  configuration:
+    #打印sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名转换
+    map-underscore-to-camel-case: true
+# dubbo 配置
+dubbo:
+  application:
+    name: goodsService
+    qos-port: 20300
+  #注册中心的配置
+  registry:
+    address: zookeeper://localhost:2181
+  #服务生产者
+  provider:
+    token: true
+  protocol:
+    name: dubbo
+    port: 30300
+
+#  文件上传路径
+upload:
+  path: E:/mypic/
