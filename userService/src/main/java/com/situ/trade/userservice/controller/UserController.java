@@ -8,7 +8,7 @@ import com.situ.trade.commons.util.JWTUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,8 +85,12 @@ public class UserController {
             return Result.error(e.getMessage());
         }
     }
-    @GetMapping(("/{userId}"))
-    public Result get(@PathVariable Integer userId) {
+    @GetMapping(("/{id}"))
+    public Result get(@PathVariable("id") Integer userId, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        if(!user.getUserId().equals(userId)){
+            return Result.error("用户异常");
+        }
         return Result.success(userService.getById(userId));
     }
     @GetMapping()

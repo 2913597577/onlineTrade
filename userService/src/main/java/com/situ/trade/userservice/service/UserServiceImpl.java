@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Integer userId) {
-        return null;
+        return userMapper.selectById(userId);
     }
     @Override
     public List<User> search(User user) {

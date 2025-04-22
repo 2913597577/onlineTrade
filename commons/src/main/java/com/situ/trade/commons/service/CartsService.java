@@ -9,7 +9,7 @@ public interface CartsService {
 
     int add(Carts carts) throws Exception;
 
-    int delete(Integer cartId) throws Exception;
+    int delete(Integer cartId,Integer userId) throws Exception;
 
     List<Carts> search(Carts carts);
 

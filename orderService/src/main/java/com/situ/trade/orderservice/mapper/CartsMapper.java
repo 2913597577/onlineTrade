@@ -42,6 +42,12 @@ public interface CartsMapper {
 
     @Select({
             "select * from carts",
+            "where user_id=#{userId} and cart_id=#{cartsId}",
+    })
+    Carts selectByUserIdAndCartsId(Integer userId, Integer cartsId);
+
+    @Select({
+            "select * from carts",
             "where user_id=#{userId}",
     })
     List<Carts> selectByUserId(Integer userId);
@@ -51,6 +57,7 @@ public interface CartsMapper {
             "where user_id=#{userId}"
     })
     List<Carts> select(Carts carts);
+
     @Select({
             "select * from carts",
             "where user_id=#{userId}"

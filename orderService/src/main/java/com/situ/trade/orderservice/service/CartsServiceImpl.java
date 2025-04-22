@@ -3,6 +3,7 @@ package com.situ.trade.orderservice.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.situ.trade.commons.domian.entity.Carts;
+import com.situ.trade.commons.domian.entity.Goods;
 import com.situ.trade.commons.service.CartsService;
 import com.situ.trade.commons.service.GoodsService;
 import com.situ.trade.orderservice.mapper.CartsMapper;
@@ -40,16 +41,23 @@ public class CartsServiceImpl implements CartsService {
     }
 
     @Override
-    public int delete(Integer cartId) throws Exception {
+    public int delete(Integer cartId, Integer userId) throws Exception {
+        Carts sCart = cartsMapper.selectByUserIdAndCartsId(userId,cartId);
+        if(ObjectUtils.isEmpty(sCart)){
+            throw new Exception("无效的购物车信息");
+        }
         return cartsMapper.delete(cartId);
     }
+
 
     @Override
     public List<Carts> search(Carts carts) {
         //这里只能查询到购物车的信息
         List<Carts> carts1= cartsMapper.select(carts);
         //需要每一个商品的信息，需要调用goodsService，使用dubbo RPC基于长连接的
-        goodsService.get(1);
+        for (Carts cart : carts1){
+            cart.setGoods(goodsService.get(cart.getGoodsId()));
+        }
         return carts1;
     }
 

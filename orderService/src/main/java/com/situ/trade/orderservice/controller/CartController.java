@@ -12,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,10 +35,12 @@ public class CartController {
             return Result.error(e.getMessage());
         }
     }
-    @DeleteMapping
-    public Result delete(Integer castId) {
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable("id") Integer id, Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
         try {
-            cartsService.delete(castId);
+            cartsService.delete(id, user.getUserId());
             return Result.success();
         } catch (Exception e) {
             log.warn(Arrays.toString(e.getStackTrace()));
@@ -51,6 +54,8 @@ public class CartController {
         carts.setUserId(user.getUserId());
 
         if(ObjectUtils.isEmpty(pageNum)){
+           List<Carts> cartsList = cartsService.search(carts);
+            System.out.println(cartsList);
             return Result.success(cartsService.search(carts));
         }else {
             return Result.success(cartsService.searchForPage(pageNum,pageSize,carts));

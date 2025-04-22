@@ -43,10 +43,19 @@ public interface GoodsMapper {
     int delete(Integer goodsId);
 
     @Select({
-            "select * from goods",
-            "where goods_id=#{goodsId}",
+            "select goods.*, type.type_id as type_id",
+            "from goods",
+            "left join type on goods.type_id = type.type_id",
+            "where goods.goods_id = #{goodsId}"
     })
-    @ResultMap("goods")  //在引用id=goods的那套@Results
+    @Results({
+            @Result(property = "goodsId", column = "goods_id", id = true),
+            @Result(property = "typeId", column = "type_id"),
+            @Result(property = "type", column = "type_id",
+                    many = @Many(select = "com.situ.trade.goodsservice.mapper.TypeMapper.searchByTypeId")),
+            @Result(property = "pics", column = "goods_id",
+                    many = @Many(select = "com.situ.trade.goodsservice.mapper.GoodsPicMapper.selectByGoodsId"))
+    })
     Goods getById(Integer goodsId);
 
     @Select({
