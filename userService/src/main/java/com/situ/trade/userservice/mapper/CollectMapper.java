@@ -33,7 +33,7 @@ public interface CollectMapper {
             "select * from collect",
             "where user_id=#{userId}",
     })
-    Collect selectByUserId(Integer userId);
+    List<Collect> selectByUserId(Integer userId);
 
     @Select({
             "select * from collect",

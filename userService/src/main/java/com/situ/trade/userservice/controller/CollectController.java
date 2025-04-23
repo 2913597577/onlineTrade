@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -57,6 +59,21 @@ public class CollectController {
         //根据用户id和商品id查询收藏信息
         Collect collect= collectService.selectByUserIdAndGoodsId(user.getUserId(), goodsId);
         return Result.success(collect);
+    }
+    @GetMapping("/list")
+    public Result getByUserId(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        if (ObjectUtils.isEmpty(user)){
+            return Result.error("用户未登录");
+        }
+        try {
+            List<Collect> collect = collectService.selectByUserId(user.getUserId());
+            return Result.success(collect);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return Result.error(e.getMessage());
+        }
     }
 
     @GetMapping()

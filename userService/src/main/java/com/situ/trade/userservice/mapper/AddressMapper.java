@@ -9,11 +9,11 @@ import java.util.List;
 public interface AddressMapper {
     @Insert({
             "insert into address",
-            "(address),(user_id)",
+            "(address,user_id)",
             "values ",
             "(#{address},#{userId})"
     })
-    int insert(Address address);
+    int insert(Address addresses);
     @Delete({
             "delete from address",
             "where id =#{id}"
@@ -26,8 +26,14 @@ public interface AddressMapper {
     })
     int update(Address address);
     @Select({
-            "select `address` from address",
+            "select * from address",
             "where user_id=#{userId}"
     })
     List<Address> select(Integer userId);
+
+    @Select({
+            "select * from address",
+            "where id=#{id}"
+    })
+    Address selectById(Integer id);
 }

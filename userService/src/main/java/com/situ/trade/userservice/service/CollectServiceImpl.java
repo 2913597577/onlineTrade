@@ -2,13 +2,12 @@ package com.situ.trade.userservice.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.situ.trade.commons.domian.entity.Carts;
 import com.situ.trade.commons.domian.entity.Collect;
-import com.situ.trade.commons.domian.entity.User;
 import com.situ.trade.commons.service.CollectService;
+import com.situ.trade.commons.service.GoodsService;
 import com.situ.trade.userservice.mapper.CollectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -19,6 +18,9 @@ import java.util.List;
 public class CollectServiceImpl implements CollectService {
 
     private final CollectMapper collectMapper;
+
+    @DubboReference(version = "1.0.0")
+    private GoodsService goodsService;
 
     @Override
     public int add(Collect collect) throws Exception {
@@ -68,8 +70,12 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public Collect selectByUserId(Integer userId) {
-        return null;
+    public List<Collect> selectByUserId(Integer userId) {
+        List<Collect> list = collectMapper.selectByUserId(userId);
+        list.forEach(collect -> {
+            collect.setGoods(goodsService.get(collect.getGoodsId()));
+        });
+        return list;
     }
 
     @Override

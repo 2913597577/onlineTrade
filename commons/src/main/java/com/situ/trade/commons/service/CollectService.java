@@ -21,7 +21,7 @@ public interface CollectService {
 
     Collect selectById(Integer id);
 
-    Collect selectByUserId(Integer userId);
+    List<Collect> selectByUserId(Integer userId);
 
     Collect selectByUserIdAndGoodsId(Integer userId, Integer goodsId);
 

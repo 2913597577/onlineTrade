@@ -17,3 +17,18 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰命名转换
     map-underscore-to-camel-case: true
+
+# dubbo 配置
+dubbo:
+  application:
+    name: userService
+    qos-port: 20200
+  #注册中心的配置
+  registry:
+    address: zookeeper://localhost:2181
+  #服务生产者
+  provider:
+    token: true
+  protocol:
+    name: dubbo
+    port: 30200
