@@ -24,7 +24,6 @@ public class TypeController {
             typeService.add(type);
             return Result.success();
         } catch (Exception e) {
-            e.printStackTrace();
             log.error(e.getMessage());
             return Result.error(e.getMessage());
         }

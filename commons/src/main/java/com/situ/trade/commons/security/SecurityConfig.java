@@ -64,7 +64,7 @@ public class SecurityConfig {
                                 .requestMatchers( HttpMethod.POST,
                                         // 用户不登录就可以访问的路径
                                         "/user/login", "/user",
-                                        "/admin/login").permitAll()
+                                        "/admin/login","/upload/**").permitAll()
                                 .anyRequest().authenticated()   // 其它路径，必须要登录后才能访问
                 );
         // 配置Token过滤器, 将过滤器加入到执行链中

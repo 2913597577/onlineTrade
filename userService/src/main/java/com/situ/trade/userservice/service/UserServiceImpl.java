@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.situ.trade.commons.domian.entity.User;
 import com.situ.trade.commons.domian.vo.UserVo;
+import com.situ.trade.commons.service.GoodsService;
 import com.situ.trade.commons.service.UserService;
 import com.situ.trade.userservice.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@DubboService(interfaceClass = UserService.class,version = "1.0.0")
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 

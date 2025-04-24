@@ -18,7 +18,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public int add(Type type) throws Exception {
-       Type sType=typeMapper.selectByName(type.getTypename());
+       List<Type> sType=typeMapper.selectByName(type.getTypename());
        if(!ObjectUtils.isEmpty(sType)){
            throw new Exception("分类已存在!");
        }

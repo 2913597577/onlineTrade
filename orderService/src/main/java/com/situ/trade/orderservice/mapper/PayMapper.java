@@ -12,7 +12,10 @@ public interface PayMapper {
 
     @Insert({
             "insert into pay",
-            "(reder_id,user_id)"
+            "(order_id,user_id,pay_type)",
+            "values ",
+            "(#{orderId},#{userId},#{payType})"
+
     })
     int insert(Pay pay);
 

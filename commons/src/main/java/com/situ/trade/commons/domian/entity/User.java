@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Data
@@ -28,6 +29,7 @@ public class User implements UserDetails {
    private Date createTime;
    private String image;
    private String idcard;
+   private BigDecimal balance;
    @JsonIgnore
    private String salt;
 

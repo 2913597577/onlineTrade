@@ -59,7 +59,7 @@ public interface TypeMapper {
             "select * from type",
             "where typename =#{name}"
     })
-    Type selectByName(String name);
+    List<Type> selectByName(String name);
     @Insert({
             "insert into type",
             "(typename,parent_id,dscp,pic,recom)",

@@ -9,15 +9,17 @@ import java.util.List;
 public interface OrderMapper {
     @Insert({
             "insert into orders",
-            "(amount,goods_id,user_id)",
+            "(amount,goods_id,user_id,address)",
             "values ",
-            "(#{amout},#{goodsId},#{userId})"
+            "(#{amount},#{goodsId},#{userId},#{address})"
     })
+    @Options(useGeneratedKeys = true, keyProperty = "orderId")
     int insert(Order order);
 
     @Update({
             "update orders",
-            "set status=#{status}"
+            "set status=#{status}",
+            "where order_id=#{orderId}"
     })
     int update(Order order);
 
@@ -25,7 +27,7 @@ public interface OrderMapper {
             "delete from orders",
             "where order_id=#{orderId}"
     })
-    int delete(Order order);
+    int delete(Integer orderId);
 
     @Select({
             "select * from orders",
@@ -34,7 +36,16 @@ public interface OrderMapper {
     Order selectById(Integer orderId);
 
     @Select({
+            "<script>",
             "select * from orders",
+            "<where>",
+            "<if test='status != null'>and status = #{status}</if>",
+            "<if test='userId != null'>and user_id = #{userId}</if>",
+            "<if test='goodsId != null'>and goods_id = #{goodsId}</if>",
+            "<if test='createTime != null'>and create_time = #{createTime}</if>",
+            "</where>",
+            "</script>"
     })
-    List<Order> selectBy(Order order);
+    List<Order> select(Order order);
+
 }

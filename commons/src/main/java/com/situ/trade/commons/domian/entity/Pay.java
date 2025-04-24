@@ -15,4 +15,5 @@ public class Pay implements Serializable {
     private Integer userId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date paytime;
+    private Integer payType;
 }

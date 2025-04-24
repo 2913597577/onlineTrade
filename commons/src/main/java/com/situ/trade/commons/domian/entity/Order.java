@@ -13,10 +13,14 @@ import java.util.Date;
 public class Order implements Serializable {
     private Integer orderId;
     private Integer status;
-    private BigDecimal amount;
+    private Integer amount;
     private Integer userId;
-    private Integer goods_id;
+    private Integer goodsId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date createTime;
+    private String address;
+
+    private Goods goods;
+    private User user;
 
 }
