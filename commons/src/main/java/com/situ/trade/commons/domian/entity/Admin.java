@@ -14,6 +14,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 public class Admin implements UserDetails {
+
     private Integer id;
     private String username;
     private String name;
@@ -28,6 +29,7 @@ public class Admin implements UserDetails {
     private String address;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date startdate;
+    private Boolean permission;
 
     @Override
     @JsonIgnore

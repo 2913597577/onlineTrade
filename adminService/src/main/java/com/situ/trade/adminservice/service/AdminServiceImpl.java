@@ -96,6 +96,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             Authentication authentication = authenticationManager.authenticate(auth);
             admin=(Admin)authentication.getPrincipal();
+            admin.setPermission(true);
             return admin;
         }catch (BadCredentialsException e){
             throw new BadCredentialsException("用户名或密码错误！");

@@ -9,14 +9,15 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class Comment implements Serializable {
+public class Stores implements Serializable {
+
     private Integer id;
-    private String content;
-    private Integer orderId;
+    private String storeName;
     private Integer userId;
+    private String address;
+    private Integer status;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date createTime;
-    private String goodsScore;
-    private String StoreScore;
-    private Integer isDel;
+    private String score;
+    private String ad;
 }

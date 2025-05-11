@@ -51,7 +51,7 @@ public class PayServiceImpl implements PayService {
             if(pay.getPayType()==0){
                 User user = userService.getById(pay.getUserId());
                 // 检查用户余额是否足够
-                if (user.getBalance().compareTo(totalAmount) >= 0) {
+                if (user.getBalance()!=null&&user.getBalance().compareTo(totalAmount) >= 0) {
                     // 用户余额足够，进行支付操作
                     user.setBalance(user.getBalance().subtract(totalAmount));
                     userService.update(user);

@@ -10,9 +10,9 @@ import java.util.List;
 public interface GoodsMapper {
     @Insert({
             "insert into goods",
-            "(name,price,stock,description,type_id,detail,markPrice,purchasePrice,color,version,recom)",
+            "(name,price,stock,description,type_id,detail,markPrice,purchasePrice,color,version,recom,store_id,after_sale_period,after_sale_service)",
             "values ",
-            "(#{name},#{price},#{stock},#{description},#{typeId},#{detail},#{markPrice},#{purchasePrice},#{color},#{version},#{recom})",
+            "(#{name},#{price},#{stock},#{description},#{typeId},#{detail},#{markPrice},#{purchasePrice},#{color},#{version},#{recom},#{storeId},#{afterSalePeriod},#{afterSaleService})",
     })
     @Options(useGeneratedKeys = true,keyColumn = "goods_id",keyProperty = "goodsId")
     int insert(Goods goods);
@@ -30,6 +30,9 @@ public interface GoodsMapper {
             "<if test='status!=null'>status=#{status},</if>",
             "<if test='recom!=null'>recom=#{recom},</if>",
             "<if test='score!=null'>score=#{score},</if>",
+            "<if test='sold!=null'>sold=#{sold},</if>",
+            "<if test='afterSalePeriod!=null'>after_sale_period=#{afterSalePeriod},</if>",
+            "<if test='afterSaleService!=null and detail.length>0'>after_sale_service=#{afterSaleService},</if>",
             "</set>",
             "where goods_id=#{goodsId}",
             "</script>"
@@ -80,6 +83,7 @@ public interface GoodsMapper {
             "<if test='name!=null and name.length>0'> and name like concat('%',#{name},'%')</if>",
             "<if test='recom!=null'> and goods.recom=#{recom} </if>",
             "<if test='typeId!=null'> and (goods.type_id=#{typeId} or type.parent_id=#{typeId}) </if>",
+            "<if test='storeId!=null'> and goods.store_id=#{storeId} </if>",
             "</where>",
             "</script>",
     })

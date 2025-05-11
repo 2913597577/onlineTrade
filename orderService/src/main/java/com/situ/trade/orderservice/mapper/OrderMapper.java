@@ -9,9 +9,9 @@ import java.util.List;
 public interface OrderMapper {
     @Insert({
             "insert into orders",
-            "(amount,goods_id,user_id,address)",
+            "(amount,goods_id,user_id,address,seller_id)",
             "values ",
-            "(#{amount},#{goodsId},#{userId},#{address})"
+            "(#{amount},#{goodsId},#{userId},#{address},#{sellerId})"
     })
     @Options(useGeneratedKeys = true, keyProperty = "orderId")
     int insert(Order order);
@@ -43,6 +43,7 @@ public interface OrderMapper {
             "<if test='userId != null'>and user_id = #{userId}</if>",
             "<if test='goodsId != null'>and goods_id = #{goodsId}</if>",
             "<if test='createTime != null'>and create_time = #{createTime}</if>",
+            "<if test='sellerId != null'>and seller_id = #{sellerId}</if>",
             "</where>",
             "</script>"
     })

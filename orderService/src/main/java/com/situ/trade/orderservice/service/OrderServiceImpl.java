@@ -5,12 +5,15 @@ import com.github.pagehelper.PageInfo;
 import com.situ.trade.commons.domian.entity.Carts;
 import com.situ.trade.commons.domian.entity.Goods;
 import com.situ.trade.commons.domian.entity.Order;
+import com.situ.trade.commons.domian.entity.Stores;
 import com.situ.trade.commons.domian.vo.Result;
 import com.situ.trade.commons.service.GoodsService;
 import com.situ.trade.commons.service.OrderService;
+import com.situ.trade.commons.service.StoresService;
 import com.situ.trade.commons.service.UserService;
 import com.situ.trade.orderservice.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.Store;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
     private GoodsService goodsService;
     @DubboReference(version = "1.0.0")
     private UserService userService;
+    @DubboReference(version = "1.0.0")
+    private StoresService storesService;
 
     @Override
     @Transactional
@@ -34,8 +39,11 @@ public class OrderServiceImpl implements OrderService {
         if(order!=null){
            Goods goods= goodsService.get(order.getGoodsId());
            if(goods!=null){
+               Stores store = storesService.getById(goods.getStoreId());
+               order.setSellerId(store.getUserId());
                if(goods.getStock()>=order.getAmount()){
                    goods.setStock(goods.getStock()-order.getAmount());
+                   goods.setSold(goods.getSold()+order.getAmount());
                    goodsService.update(goods);
                    orderMapper.insert(order);
                    return Result.success(order);
@@ -62,6 +70,7 @@ public class OrderServiceImpl implements OrderService {
         if(order!=null){
             order.setGoods(goodsService.get(order.getGoodsId()));
             order.setUser(userService.getById(order.getUserId()));
+            order.setSeller(userService.getById(order.getSellerId()));
         }
         return order;
     }
@@ -72,6 +81,7 @@ public class OrderServiceImpl implements OrderService {
             list.forEach(item->{
                 item.setGoods(goodsService.get(item.getGoodsId()));
                 item.setUser(userService.getById(item.getUserId()));
+                item.setSeller(userService.getById(item.getSellerId()));
             });
         }
         return list;
@@ -85,6 +95,7 @@ public class OrderServiceImpl implements OrderService {
             list.forEach(item->{
                 item.setGoods(goodsService.get(item.getGoodsId()));
                 item.setUser(userService.getById(item.getUserId()));
+                item.setSeller(userService.getById(item.getSellerId()));
             });
         }
         return new PageInfo<>(list);

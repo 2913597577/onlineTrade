@@ -32,6 +32,11 @@ public class User implements UserDetails {
    private BigDecimal balance;
    @JsonIgnore
    private String salt;
+   private Integer role;
+   private Integer storeId;
+   private Boolean permission;
+
+   private Stores store;
 
    @Override
    @JsonIgnore

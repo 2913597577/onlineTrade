@@ -19,8 +19,10 @@ public class Order implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date createTime;
     private String address;
+    private Integer sellerId;
 
     private Goods goods;
     private User user;
+    private User seller;
 
 }

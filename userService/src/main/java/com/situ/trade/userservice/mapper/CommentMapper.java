@@ -1,10 +1,7 @@
 package com.situ.trade.userservice.mapper;
 
 import com.situ.trade.commons.domian.entity.Comment;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,14 +9,14 @@ import java.util.List;
 public interface CommentMapper {
     @Insert({
             "insert into comment",
-            "(content,order_id,user_id)",
+            "(content,order_id,user_id,goods_score,store_score)",
             "values ",
-            "(#{content},#{orderId},#{userId})"
+            "(#{content},#{orderId},#{userId},#{goodsScore},#{storeScore})"
     })
     int insert(Comment comment);
 
-    @Delete({
-            "delete from comment",
+    @Update({
+            "update comment set is_del = #{isDel}",
             "where id =#{id}"
     })
     int delete(Integer id);

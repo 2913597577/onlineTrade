@@ -5,6 +5,7 @@ import com.situ.trade.commons.domian.vo.Result;
 import com.situ.trade.commons.service.TypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class TypeController {
     private final TypeService typeService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result add(@RequestBody Type type) {
         try {
             typeService.add(type);
@@ -30,6 +32,7 @@ public class TypeController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Result edit(@RequestBody Type type) {
         try {
             typeService.update(type);

@@ -77,4 +77,25 @@ public class OrderController {
             return Result.error(e.getMessage());
         }
     }
+    @PutMapping("/batch")
+    public Result batchUpdate(@RequestBody int[] ids) {
+        if (ids == null || ids.length == 0) {
+            return Result.error("ID 列表不能为空");
+        }
+        try {
+            for (int id : ids) {
+                Order order = orderService.selectById(id);
+                if (order == null) {
+                    log.warn("订单不存在，ID：{}", id);
+                    continue;
+                }
+                order.setStatus(2); // 设置为已发货状态
+                orderService.update(order);
+            }
+            return Result.success();
+        } catch (Exception e) {
+            log.error("批量更新订单失败", e);
+            return Result.error("服务器错误：" + e.getMessage());
+        }
+    }
 }

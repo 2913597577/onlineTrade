@@ -6,6 +6,7 @@ import com.situ.trade.commons.domian.entity.User;
 import com.situ.trade.commons.domian.vo.UserVo;
 import com.situ.trade.commons.service.GoodsService;
 import com.situ.trade.commons.service.UserService;
+import com.situ.trade.userservice.mapper.StoresMapper;
 import com.situ.trade.userservice.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.util.List;
 @DubboService(interfaceClass = UserService.class,version = "1.0.0")
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final StoresMapper storeMapper;
 
     //注入一个认证管理器
     @Autowired
@@ -65,6 +67,10 @@ public class UserServiceImpl implements UserService {
 
             //得到用户信息
             User loginUser=(User)authentication.getPrincipal();
+            loginUser.setPermission(false);
+            if (loginUser.getRole()==1){
+                loginUser.setStore(storeMapper.selectById(loginUser.getStoreId()));
+            }
             return loginUser;
         }catch (BadCredentialsException e) {
             throw new BadCredentialsException("用户名或密码错误！");

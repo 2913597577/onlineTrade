@@ -33,7 +33,9 @@ public interface UserMapper {
             "<if test='email!=null and email.length>0'>email=#{email},</if>",
             "<if test='image!=null and image.length>0'>image=#{image},</if>",
             "<if test='status!=null'>status=#{status},</if>",
-            "<if test='balance!=null'>balance=#{balance}</if>",
+            "<if test='balance!=null'>balance=#{balance},</if>",
+            "<if test='role!=null'>`role`=#{role},</if>",
+            "<if test='storeId!=null'>store_id=#{storeId},</if>",
             "</set>",
             "where user_id=#{userId}",
             "</script>",
@@ -50,7 +52,7 @@ public interface UserMapper {
             "select * from users",
             "where user_id=#{userId}",
     })
-    User selectById(Integer id);
+    User selectById(Integer userId);
     @Select({
             "select * from users",
             "where username=#{username}",
@@ -64,6 +66,7 @@ public interface UserMapper {
             "<if test='phone!=null and phone.length>0'> and phone like concat('%',#{phone},'%') </if>",
             "<if test='realname!=null and realname.length>0'> and realname like concat('%',#{realname},'%') </if>",
             "<if test='status!=null'> and status=#{status} </if>",
+            "<if test='role!=null'> and `role`=#{role} </if>",
             "</where>",
             "order by create_time desc",
             "</script>",

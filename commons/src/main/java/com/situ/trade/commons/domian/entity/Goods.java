@@ -23,6 +23,7 @@ public class Goods implements Serializable {
     private BigDecimal markPrice;
     private BigDecimal purchasePrice;
     private Integer stock;
+    private Integer sold;
     private Integer recom;
     private Integer typeId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
@@ -30,6 +31,9 @@ public class Goods implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GTM+8")
     private Date updateTime;
     private Integer status;
+    private Integer  storeId;
+    private Integer afterSalePeriod;
+    private String afterSaleService;
 
     private Type type;
     private List<GoodsPic> pics;
